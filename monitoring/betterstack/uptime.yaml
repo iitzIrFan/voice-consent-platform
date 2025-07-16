@@ -1,0 +1,10 @@
+checks:
+  - name: voice-consent-prod
+    type: http
+    request:
+      url: https://example.com/health
+      method: GET
+    assert:
+      status_code: 200
+    frequency: 60 # seconds
+    locations: [us-east-1, eu-central-1]

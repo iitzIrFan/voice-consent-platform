@@ -1,0 +1,26 @@
+{
+  "name": "voice-consent-platform",
+  "version": "0.1.0",
+  "description": "Serverless voice and messaging consent platform as per README.md",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start:worker": "node --loader ts-node/esm redis/worker.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "ioredis": "^5.3.1",
+    "minio": "^7.0.18",
+    "node-fetch": "^3.3.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.5.2",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.4.0",
+    "ts-node": "^10.9.2"
+  }
+}

@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - name: Deploy Supabase Edge Function
+        run: |
+          npm install -g supabase
+          supabase functions deploy consentLogger --project-id ${{ secrets.SUPABASE_PROJECT_ID }} --org-id ${{ secrets.SUPABASE_ORG_ID }} --access-token ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      - name: Build & Push Worker Container (optional)
+        run: echo "TODO: Docker build & push"
+      - name: Terraform Apply
+        working-directory: infra
+        run: |
+          terraform init -input=false
+          terraform apply -auto-approve -input=false
+        env:
+          TF_VAR_supabase_access_token: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          TF_VAR_supabase_org_id: ${{ secrets.SUPABASE_ORG_ID }}
+          TF_VAR_upstash_email: ${{ secrets.UPSTASH_EMAIL }}
+          TF_VAR_upstash_api_key: ${{ secrets.UPSTASH_API_KEY }}
+          TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

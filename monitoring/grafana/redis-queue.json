@@ -1,0 +1,18 @@
+{
+  "__inputs": [],
+  "title": "Redis Consent Queue",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Queue Length",
+      "targets": [
+        {
+          "expr": "redis_queue_length{queue=\"consent-queue\"}",
+          "legendFormat": "consent-queue"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 36,
+  "version": 1
+}
